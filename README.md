@@ -10,8 +10,8 @@ I'm currently seeking an internship in the Computer Science field in order to ap
 
 ## Content
 Below are some projects I have completed throughout my studies:
-- ** MicroTweet Platform **: Simple Twitter-like application using a SQLite database for data storage. ([Link to the project](project-link))
-- ** **: [Short description] ([Link to the project](project-link))
+- ** MicroSocial Platform  **: Simple Twitter-like application using a SQLite database for data storage. ([Link to the project](project-link))
+- ** TweetData Manager **: Specialized application designed for managing and interacting with tweet data stored in MongoDB ([Link to the project](project-link))
 
 
 

@@ -10,15 +10,15 @@ I'm currently seeking an internship in the Computer Science field in order to ap
 
 ## Content
 Below are some projects I have completed throughout my studies:
-- ** MicroSocial Platform  **: Simple Twitter-like application using a SQLite database for data storage. ([Link to the project](project-link))
-- ** TweetData Manager **: Specialized application designed for managing and interacting with tweet data stored in MongoDB ([Link to the project (project-link))
-- - ** Pong **: Pong game using pygame
+- ** MicroSocial Platform  **: Simple Twitter-like application using a SQLite database for data storage. 
+- ** TweetData Manager **: Specialized application designed for managing and interacting with tweet data stored in MongoDB.
+- ** Pong **: Classic Pong game implemented using Pygame.
+- ** Tic-Tac-Toe **: Classic Tic Tac Toe game implemented using Pygame.
 
 
 
 ## Connect with Me
-- LinkedIn: [Your LinkedIn profile](LinkedIn-link)
-- Email: [Your email]
-- Portfolio: [Link to your portfolio](portfolio-link)
+- LinkedIn: Luisa Bertoli (www.linkedin.com/in/luisa-bertoli-36b72a2b9)
+- Email: lubertolis@gmail.com
 
 I'm always open to interesting conversations and collaboration on projects. If you have an idea or want to chat, please feel free to reach out!

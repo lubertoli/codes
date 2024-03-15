@@ -1,0 +1,268 @@
+-- Let's drop the tables in case they exist from previous runs
+drop table if exists includes;
+drop table if exists lists;
+drop table if exists retweets;
+drop table if exists mentions;
+drop table if exists hashtags;
+drop table if exists tweets;
+drop table if exists follows;
+drop table if exists users;
+
+create table users (
+  usr         int,
+  pwd	      text,
+  name        text,
+  email       text,
+  city        text,
+  timezone    float,
+  primary key (usr)
+);
+create table follows (
+  flwer       int,
+  flwee       int,
+  start_date  date,
+  primary key (flwer, flwee),
+  foreign key (flwer) references users,
+  foreign key (flwee) references users
+);
+create table tweets (
+  tid	      int,
+  writer      int,
+  tdate       date,
+  text        text,
+  replyto     int,
+  primary key (tid),
+  foreign key (writer) references users,
+  foreign key (replyto) references tweets
+);
+create table hashtags (
+  term        text,
+  primary key (term)
+);
+create table mentions (
+  tid         int,
+  term        text,
+  primary key (tid,term),
+  foreign key (tid) references tweets,
+  foreign key (term) references hashtags
+);
+create table retweets (
+  usr         int,
+  tid         int,
+  rdate       date,
+  primary key (usr,tid),
+  foreign key (usr) references users,
+  foreign key (tid) references tweets
+);
+create table lists (
+  lname        text,
+  owner        int,
+  primary key (lname),
+  foreign key (owner) references users
+);
+create table includes (
+  lname       text,
+  member      int,
+  primary key (lname,member),
+  foreign key (lname) references lists,
+  foreign key (member) references users
+);
+
+-- Users
+INSERT INTO users (usr, pwd, name, email, city, timezone) VALUES 
+(1, 'password1', 'John Doe', 'john.doe@email.com', 'New York', -5),
+(2, 'password2', 'Jane Smith', 'jane.smith@email.com', 'Los Angeles', -8),
+(3, 'password3', 'Alice Johnson', 'alice.johnson@email.com', 'Chicago', -6),
+(4, 'password4', 'Bob Brown', 'bob.brown@email.com', 'Miami', -5),
+(5, 'password5', 'Carol Wilson', 'carol.wilson@email.com', 'San Francisco', -8),
+(6, 'password6', 'David Lee', 'david.lee@email.com', 'Houston', -6),
+(7, 'password7', 'Emily Green', 'emily.green@email.com', 'Denver', -7),
+(8, 'password8', 'Frank Adams', 'frank.adams@email.com', 'Seattle', -8),
+(9, 'password9', 'Grace Turner', 'grace.turner@email.com', 'Phoenix', -7),
+(10, 'password10', 'Henry Baker', 'henry.baker@email.com', 'Boston', -5),
+(11, 'password11', 'Isabella Young', 'isabella.young@email.com', 'San Diego', -8),
+(12, 'password12', 'James Harris', 'james.harris@email.com', 'Atlanta', -5),
+(13, 'password13', 'Katherine Lewis', 'katherine.lewis@email.com', 'Dallas', -6),
+(14, 'password14', 'Liam Martin', 'liam.martin@email.com', 'Philadelphia', -5),
+(15, 'password15', 'Olivia Davis', 'olivia.davis@email.com', 'Houston', -6),
+(16, 'password16', 'Sophia White', 'sophia.white@email.com', 'Chicago', -6),
+(17, 'password17', 'Benjamin Turner', 'benjamin.turner@email.com', 'San Francisco', -8),
+(18, 'password18', 'Mia Martinez', 'mia.martinez@email.com', 'Miami', -5),
+(19, 'password19', 'William Lewis', 'william.lewis@email.com', 'Denver', -7),
+(20, 'password20', 'Olivia Davis', 'olivia.davis@email.com', 'Houston', -6);
+
+-- Follows
+INSERT INTO follows (flwer, flwee, start_date) VALUES 
+(1, 2, '2023-11-01'),
+(1, 3, '2023-11-01'),
+(2, 1, '2023-11-01'),
+(2, 4, '2023-11-01'),
+(3, 1, '2023-11-01');
+
+-- Tweets
+INSERT INTO tweets (tid, writer, tdate, text, replyto) VALUES 
+(1, 1, '2023-11-02', 'This is a sample tweet. #sampletweet', NULL),
+(2, 2, '2023-11-03', 'Hello, world! #hello', NULL),
+(3, 3, '2023-11-04', 'Testing the tweet feature. #testing', NULL),
+(4, 4, '2023-11-05', 'Good morning! #morning', NULL),
+(5, 5, '2023-11-06', 'Just another tweet. #random', NULL);
+
+-- Hashtags
+INSERT INTO hashtags (term) VALUES 
+('#sampletweet'),
+('#hello'),
+('#testing'),
+('#morning'),
+('#random');
+
+-- Mentions
+INSERT INTO mentions (tid, term) VALUES 
+(1, '#sampletweet'),
+(2, '#hello'),
+(3, '#testing'),
+(4, '#morning'),
+(5, '#random');
+
+-- Retweets
+INSERT INTO retweets (usr, tid, rdate) VALUES 
+(2, 1, '2023-11-03'),
+(3, 1, '2023-11-04'),
+(4, 1, '2023-11-05'),
+(5, 1, '2023-11-06'),
+(1, 2, '2023-11-02');
+
+-- Lists
+INSERT INTO lists (lname, owner) VALUES 
+('List1', 1),
+('List2', 2),
+('List3', 3),
+('List4', 4),
+('List5', 5);
+
+-- Includes
+INSERT INTO includes (lname, member) VALUES 
+('List1', 2),
+('List1', 3),
+('List2', 1),
+('List2', 4),
+('List3', 1);
+
+-- Follows
+INSERT INTO follows (flwer, flwee, start_date) VALUES 
+(5, 6, '2023-11-01'),
+(6, 5, '2023-11-01'),
+(7, 8, '2023-11-01'),
+(8, 9, '2023-11-01'),
+(10, 7, '2023-11-01');
+
+-- Tweets
+INSERT INTO tweets (tid, writer, tdate, text, replyto) VALUES 
+(6, 6, '2023-11-07', 'Just joined Twitter! #newbie', NULL),
+(7, 7, '2023-11-07', 'Exploring the Twitterverse. #exciting', NULL),
+(8, 8, '2023-11-07', 'Tweeting from the Emerald City. #Seattle', NULL),
+(9, 9, '2023-11-07', 'Sunny day in Phoenix. #sunshine', NULL),
+(10, 10, '2023-11-07', 'Boston''s finest. #Beantown', NULL);
+
+-- Hashtags
+INSERT INTO hashtags (term) VALUES 
+('#newbie'),
+('#exciting'),
+('#Seattle'),
+('#sunshine'),
+('#Beantown');
+
+-- Mentions
+INSERT INTO mentions (tid, term) VALUES 
+(6, '#newbie'),
+(7, '#exciting'),
+(8, '#Seattle'),
+(9, '#sunshine'),
+(10, '#Beantown');
+
+-- Retweets
+INSERT INTO retweets (usr, tid, rdate) VALUES 
+(1, 6, '2023-11-07'),
+(2, 7, '2023-11-07'),
+(3, 8, '2023-11-07'),
+(4, 9, '2023-11-07'),
+(5, 10, '2023-11-07');
+
+-- Follows
+INSERT INTO follows (flwer, flwee, start_date) VALUES 
+(6, 11, '2023-11-01'),
+(11, 6, '2023-11-01'),
+(7, 12, '2023-11-01'),
+(12, 13, '2023-11-01'),
+(13, 14, '2023-11-01');
+
+-- Tweets
+INSERT INTO tweets (tid, writer, tdate, text, replyto) VALUES 
+(11, 11, '2023-11-08', 'Sunny day in San Diego. #beachday', NULL),
+(12, 12, '2023-11-08', 'Exploring Atlanta''s vibrant culture. #citylife', NULL),
+(13, 13, '2023-11-08', 'Dallas, the heart of Texas. #lonestarstate', NULL),
+(14, 14, '2023-11-08', 'Philadelphia''s historic charm. #history', NULL),
+(15, 15, '2023-11-08', 'Rainy day in Portland. #rainyday', NULL);
+
+-- Hashtags
+INSERT INTO hashtags (term) VALUES 
+('#beachday'),
+('#citylife'),
+('#lonestarstate'),
+('#history'),
+('#rainyday');
+
+-- Mentions
+INSERT INTO mentions (tid, term) VALUES 
+(11, '#beachday'),
+(12, '#citylife'),
+(13, '#lonestarstate'),
+(14, '#history'),
+(15, '#rainyday');
+
+-- Retweets
+INSERT INTO retweets (usr, tid, rdate) VALUES 
+(6, 11, '2023-11-08'),
+(7, 12, '2023-11-08'),
+(8, 13, '2023-11-08'),
+(9, 14, '2023-11-08'),
+(10, 15, '2023-11-08');
+
+-- Follows
+INSERT INTO follows (flwer, flwee, start_date) VALUES 
+(10, 16, '2023-11-01'),
+(11, 17, '2023-11-01'),
+(12, 18, '2023-11-01'),
+(13, 19, '2023-11-01'),
+(14, 20, '2023-11-01');
+
+-- Tweets
+INSERT INTO tweets (tid, writer, tdate, text, replyto) VALUES 
+(16, 16, '2023-11-09', 'Enjoying a day in Chicago. #windycity', NULL),
+(17, 17, '2023-11-09', 'San Francisco''s beautiful skyline. #bayarea', NULL),
+(18, 18, '2023-11-09', 'Miami''s vibrant nightlife. #nightlife', NULL),
+(19, 19, '2023-11-09', 'Denver''s scenic views. #mountains', NULL),
+(20, 20, '2023-11-09', 'Houston''s culinary delights. #foodie', NULL);
+
+-- Hashtags
+INSERT INTO hashtags (term) VALUES 
+('#windycity'),
+('#bayarea'),
+('#nightlife'),
+('#mountains'),
+('#foodie');
+
+-- Mentions
+INSERT INTO mentions (tid, term) VALUES 
+(16, '#windycity'),
+(17, '#bayarea'),
+(18, '#nightlife'),
+(19, '#mountains'),
+(20, '#foodie');
+
+-- Retweets
+INSERT INTO retweets (usr, tid, rdate) VALUES 
+(7, 16, '2023-11-09'),
+(8, 17, '2023-11-09'),
+(9, 18, '2023-11-09'),
+(10, 19, '2023-11-09'),
+(11, 20, '2023-11-09');

@@ -1,4 +1,14 @@
+"""
+pong.py: A classic Pong game implementation using Python. This script sets up a game environment where two players control paddles to hit a ball back and forth. The objective is to prevent the ball from passing one's paddle, with each missed ball resulting in a point for the opponent. This implementation may utilize libraries such as Pygame for graphics and event handling, providing a graphical user interface for the game, paddle, and ball movements, as well as scorekeeping.
 
+Features include:
+- Game initialization and main loop
+- Player control of paddles
+- Ball movement dynamics
+- Collision detection
+- Scoring system
+- Game over conditions and restart
+"""
 import pygame,random
 
 # User-defined functions

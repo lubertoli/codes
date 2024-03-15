@@ -1,8 +1,13 @@
-# TTT Version 3 - implements the end of game condition
-# is_win ---> is_row_win--->contains_list_win--->is_list_win
-# is_win ---> is_col_win--->contains_list_win--->is_list_win
-# is_win ---> is_diagonal_win--->contains_list_win--->is_list_win
-# is_tie----> checks if the board is filled out or not
+"""
+ticTacToe.py: An implementation of the classic Tic Tac Toe game in Python. This script provides a graphical user interface (GUI) for playing Tic Tac Toe, supporting two players. It includes logic for player moves, checking win conditions across rows, columns, and diagonals, and determining a tie. The game allows for restarting after a win or tie, ensuring continuous play.
+
+Features include:
+- Initialization of the game board and GUI elements.
+- Handling player input for marking Xs and Os on the board.
+- Checking for win conditions after each move.
+- Identifying a tie if the board is filled without any player winning.
+- Restarting the game after a conclusion is reached.
+"""
 import pygame
 
 

@@ -1,3 +1,14 @@
+"""
+TweetDataManager.py integrates functionalities for managing and interacting with tweet data stored in MongoDB. It includes features to:
+- Load tweet data from a JSON file into MongoDB, leveraging the 'loadjson' module.
+- Search for tweets based on keywords, utilizing MongoDB's powerful querying capabilities.
+- Search for users by keywords in their display names or locations.
+- List top tweets and users based on metrics like retweet counts, like counts, and follower counts.
+- Allow users to compose and insert new tweets into the database.
+- Provide a user-friendly command-line interface for easy navigation and operation.
+This script serves as a comprehensive tool for social media data analysis and interaction, designed for data analysts, marketers, and researchers.
+"""
+
 import pymongo
 import loadjson
 from pymongo import MongoClient
@@ -6,14 +17,21 @@ from datetime import datetime
 import time
 
 def clear(): 
+    """
+    Clears the console screen based on the operating system. This utility function enhances the user interface by maintaining a clean screen.
+    """
     if name == 'nt':
         _ = system('cls')
     else:
         _ = system('clear')
 
-# Function that searches for tweets based on a user inputed keyword
 class ContinueLoop(Exception): pass
 def search_tweets(collection, keywords):
+    """
+    Searches and displays tweets that match the given keywords. It supports paginated display and interactive selection for detailed viewing.
+    - collection: MongoDB collection from which tweets are queried.
+    - keywords: List of keywords to search for within tweet content.
+    """
     # Use the '\b' assertion to match word boundaries
     query = {'$and': [{'content': {'$regex': f"\\b{keyword}\\b", '$options': 'i'}} for keyword in keywords]}
     tweets = list(collection.find(query))
@@ -72,11 +90,16 @@ def search_tweets(collection, keywords):
             continue
 
 
-#search for users
 class ContinueLoop(Exception):
     pass
 
 def search_users(collection, keyword):
+    """
+    Searches and displays users based on a keyword match in their display name or location. Supports interactive selection for detailed information.
+    - collection: MongoDB collection from which user data is queried.
+    - keyword: Single keyword used for searching user profiles.
+    """
+
     # Use the '\b' assertion to match word boundaries
     query = {'$or': [{'user.displayname': {'$regex': f"\\b{keyword}\\b", '$options': 'i'}}, {'user.location': {'$regex': f"\\b{keyword}\\b", '$options': 'i'}}]}
     results = collection.find(query)
@@ -152,11 +175,16 @@ def search_users(collection, keyword):
         except ContinueLoop:
             continue
 
-
-# Function displays the top tweets based on a field chosen by user
 class ContinueLoop(Exception): pass
 
 def list_top_tweets(collection, field, n):
+    """
+    Lists top 'n' tweets based on a specified metric (e.g., retweetCount, likeCount). Supports interactive selection for detailed tweet information.
+    - collection: MongoDB collection containing tweet data.
+    - field: Metric used for ranking tweets.
+    - n: Number of top tweets to display.
+    """
+
     fields = ['retweetCount', 'likeCount', 'quoteCount']
     if field not in fields:
         print("Invalid field. Please choose from 'retweetCount', 'likeCount', or 'quoteCount'.")
@@ -198,10 +226,14 @@ def list_top_tweets(collection, field, n):
         except ContinueLoop:
             continue
 
-# Function displays top users based on follower count
 class ContinueLoop(Exception): pass
 
 def list_top_users(collection, n):
+    """
+    Lists top 'n' users based on their follower count, displaying each user's profile information in a ranked order.
+    - collection: MongoDB collection containing user data.
+    - n: Number of top users to display.
+    """
     while True:
         try:
             pipeline = [
@@ -240,6 +272,11 @@ def list_top_users(collection, n):
             continue
 
 def compose_tweet(collection):
+    """
+    Prompts the user to compose a new tweet and inserts it into the MongoDB collection, confirming successful posting.
+    - collection: MongoDB collection where the new tweet will be inserted.
+    """
+    
     # Ask the user to enter the content of the tweet
     content = input("Enter the content of your tweet: ")
 
@@ -258,6 +295,9 @@ def compose_tweet(collection):
     collection.insert_one(tweet)
 
 def main(): 
+    """
+    Main function to initialize the script's functionality. It integrates the 'loadjson' module for data loading and provides a menu-driven interface for users to interact with tweet data in MongoDB.
+    """
     # Load the JSON file into MongoDB
     json_file_name = input("Enter the JSON file name: ")
     mongodb_port_number = input("Enter the MongoDB port number: ")

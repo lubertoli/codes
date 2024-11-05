@@ -14,7 +14,7 @@ Below are some projects I have completed throughout my studies:
 - ** TweetData Manager **: Specialized application designed for managing and interacting with tweet data stored in MongoDB.
 - ** Pong **: Classic Pong game implemented using Pygame.
 - ** Tic-Tac-Toe **: Classic Tic Tac Toe game implemented using Pygame.
-- ** MyBookWishlist **: Android mobile app to assist users in organizing their reading preferences 
+- ** MyBookWishlist **: Android mobile app to assist users in organizing their reading preferences (https://github.com/lubertoli/MyBookWishlist.git).
 
 
 
